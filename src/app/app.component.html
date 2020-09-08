@@ -1,0 +1,76 @@
+<form #addressForm="ngForm" class="container mt-3" (ngSubmit)="logValue()">
+<div class="container" id="dw">
+	<div class="row">
+		<table class="table table-striped table-bordered col-lg-8">
+		    <thead>
+				<tr>
+					<th>Item Name
+						<a (click)="onEditCloseItems()" class="text-info float-right">
+							<i class="mdi mdi-{{isEditItems ? 'close' : 'pencil'}} mdi-18px"></i>
+						</a>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody *ngIf="!isEditItems">
+				<tr *ngFor="let field of fieldArray; let i = index">
+					<td *ngIf="field?.name" >
+						<i (click)="deleteFieldValue(i)" class="mdi mdi-close mdi-18px"></i> {{field.name}}
+					</td>
+				</tr>
+			</tbody>
+
+			<tbody *ngIf="isEditItems">
+				<tr *ngFor="let field of fieldArray; let i = index">
+					<td>
+						<div class="input-group input-group-lg">
+							<div class="input-group-prepend">
+								<div (click)="deleteFieldValue(i)" class="input-group-text">
+									<i class="mdi mdi-close mdi-18px"></i>
+								</div>
+							</div>
+							<input [(ngModel)]="field.name" class="form-control" type="text" name="field.name" placeholder="Name...">
+						</div>
+                   </td>
+			 </tr>
+		
+			 
+        <tr>
+          <td>
+            <div class="input-group">
+				  <div class="input-group" *ngFor="let item of fieldArray; let i = index">
+					<label class="form-check-label"><strong>{{item.key}}</strong>&nbsp;&nbsp;&nbsp;</label>
+					  <div class="input-radio-label">
+						<div class="input-radio-label__list">
+						  <label *ngFor="let sizeName of item.values; let i = index">
+							<input type="radio" name="{{item.key}}" (change)="onItemChange(item.key, sizeName.value)" >
+							<span> {{sizeName.value}} &nbsp;&nbsp;</span>
+						  </label>
+						</div>
+					  </div>
+				</div>
+            </div>
+          </td>
+        </tr>
+        
+				<tr>
+					<td class="ar">
+						<button *ngIf="fieldArray.length <= 2" class="btn btn-secondary btn-lg1" type="submit" (click)="addFieldValue()" style="margin-right:10px">Add More Item</button>
+						<button (click)="onEditCloseItems()" class="btn btn-primary btn-lg1" type="submit">Save Items</button>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="text-center">
+						<button class="btn btn-success" type="submit">Download JSON</button>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</form>
+
+<!-- <router-outlet></router-outlet> -->
